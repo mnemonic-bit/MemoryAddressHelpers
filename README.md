@@ -68,7 +68,7 @@ var longAddress1 = MemoryAddress.Get(someClass);
 ```
 
 For a value-type you need to use the ref-keyword, otherwise the value will be copied,
-and the Get() method will only return the location of that value on the call-stack:
+and the Get() method would only return the location of that value on the call-stack:
 
 ```
 var someStruct = new SomeStruct();
