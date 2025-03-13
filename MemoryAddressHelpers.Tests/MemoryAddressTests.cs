@@ -56,6 +56,15 @@ namespace MemoryAddressHelpers.Tests
         }
 
         [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed1_()
+        {
+            SomeClass? someClass = default;
+            var longAddress = MemoryAddress.Get(someClass);
+
+            longAddress.Should().Be(MemoryAddress.NullAddress);
+        }
+
+        [Fact]
         public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed6()
         {
             var someRecord = new SomeRecord();

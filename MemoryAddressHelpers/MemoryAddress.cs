@@ -6,12 +6,23 @@ namespace MemoryAddressHelpers
     {
 
         /// <summary>
+        /// This represents the address for null.
+        /// </summary>
+        public const long NullAddress = 0;
+
+
+        /// <summary>
         /// Returns the address of the given instance as a long integer.
         /// </summary>
         /// <param name="obj">The instance we want an address for.</param>
         /// <returns>Returns a long integer value representing the memory address of the instance.</returns>
-        public static unsafe long Get(object obj)
+        public static unsafe long Get(object? obj)
         {
+            if (obj == null)
+            {
+                return 0;
+            }
+
             GCHandle handle = GCHandle.Alloc(obj, GCHandleType.Pinned);
 
             try
@@ -34,7 +45,7 @@ namespace MemoryAddressHelpers
         /// </summary>
         /// <param name="obj">The instance we want an address for.</param>
         /// <returns>Returns a long integer value representing the memory address of the instance.</returns>
-        public static long GetMemoryAddress(this object obj)
+        public static long GetMemoryAddress(this object? obj)
         {
             return Get(obj);
         }
@@ -48,7 +59,9 @@ namespace MemoryAddressHelpers
         public static unsafe long Get<T>(ref T value)
             where T : struct
         {
+#pragma warning disable CS8500
             fixed (T* ptr = &value)
+#pragma warning restore CS8500
             {
                 return (long)ptr;
             }
