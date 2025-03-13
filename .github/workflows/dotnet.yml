@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-dotnet@v4
 
       - name: Run tests
-        run: dotnet test --configuration Release
+        run: dotnet test --configuration Debug
 
   create_nuget:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
 
-      - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+      - run: dotnet pack --configuration Debug --output ${{ env.NuGetDirectory }}
 
       # Publish the NuGet package as an artifact to the Github registry,
       # but keep them there for at most 2 days.
