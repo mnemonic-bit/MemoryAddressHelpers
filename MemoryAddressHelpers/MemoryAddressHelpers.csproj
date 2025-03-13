@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
 
     <Title>Makes memory addresses visible in C#.</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -2,7 +2,7 @@ using FluentAssertions;
 
 namespace MemoryAddressHelpers.Tests
 {
-    public class MemoryAddressTests
+    public partial class MemoryAddressTests
     {
 
         [Fact]
@@ -36,31 +36,87 @@ namespace MemoryAddressHelpers.Tests
         }
 
         [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed4()
+        {
+            var someClass = new SomeClass();
+            long address1 = MemoryAddress.Get(someClass);
+            long address2 = someClass.GetAddress();
+
+            address1.Should().Be(address2);
+        }
+
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed5()
+        {
+            var someClass = new SomeClass();
+            long address1 = someClass.GetMemoryAddress();
+            long address2 = someClass.GetAddress();
+
+            address1.Should().Be(address2);
+        }
+
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed6()
+        {
+            var someRecord = new SomeRecord();
+            var longAddress1 = MemoryAddress.Get(someRecord);
+            var longAddress2 = GetAddressOfParameter2(someRecord);
+
+            longAddress1.Should().Be(longAddress2);
+        }
+
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenReferenceTypeIsUsed7()
+        {
+            var someRecord = new SomeRecord();
+            var longAddress1 = someRecord.GetMemoryAddress();
+            var longAddress2 = someRecord.GetAddress();
+
+            longAddress1.Should().Be(longAddress2);
+        }
+
+        [Fact]
         public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed1()
         {
             var someStruct = new SomeStruct();
             var longAddress1 = MemoryAddress.Get(ref someStruct);
             var longAddress2 = GetAddressOfParameter3(ref someStruct);
-            var longAddress3 = GetAddressOfRefParameter3(ref someStruct);
 
             longAddress1.Should().Be(longAddress2);
-            longAddress2.Should().Be(longAddress3);
         }
 
         [Fact]
         public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed2()
         {
-            var someValue = 42;
-            var longAddress1 = MemoryAddress.Get(ref someValue);
-            var longAddress2 = GetAddressOfParameter3(ref someValue);
-            var longAddress3 = GetAddressOfRefParameter3(ref someValue);
+            var someStruct = new SomeStruct();
+            var longAddress1 = MemoryAddress.Get(ref someStruct);
+            var longAddress2 = GetAddressOfRefParameter3(ref someStruct);
 
             longAddress1.Should().Be(longAddress2);
-            longAddress2.Should().Be(longAddress3);
         }
 
         [Fact]
         public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed3()
+        {
+            var someValue = 42;
+            var longAddress1 = MemoryAddress.Get(ref someValue);
+            var longAddress2 = GetAddressOfParameter3(ref someValue);
+
+            longAddress1.Should().Be(longAddress2);
+        }
+
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed4()
+        {
+            var someValue = 42;
+            var longAddress1 = MemoryAddress.Get(ref someValue);
+            var longAddress3 = GetAddressOfRefParameter3(ref someValue);
+
+            longAddress1.Should().Be(longAddress3);
+        }
+
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed5()
         {
             SomeStruct someStruct = new SomeStruct();
             long address1 = MemoryAddress.Get(ref someStruct);
@@ -70,7 +126,7 @@ namespace MemoryAddressHelpers.Tests
         }
 
         [Fact]
-        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed4()
+        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed6()
         {
             SomeStruct someStruct = new SomeStruct();
             long address1 = someStruct.GetMemoryAddress();
@@ -79,51 +135,24 @@ namespace MemoryAddressHelpers.Tests
             address1.Should().Be(address2);
         }
 
-
-        private long GetAddressOfParameter2<T>(T obj)
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed7()
         {
-            return MemoryAddress.Get(obj);
+            SomeRecordStruct someRecordStruct = new SomeRecordStruct();
+            long address1 = MemoryAddress.Get(ref someRecordStruct);
+            long address2 = someRecordStruct.GetAddress();
+
+            address1.Should().Be(address2);
         }
 
-        private long GetAddressOfRefParameter2<T>(ref T obj)
+        [Fact]
+        public void GetAddress_ShouldReturnSameAddress_WhenValueTypeIsUsed8()
         {
-            return MemoryAddress.Get(obj);
-        }
+            SomeRecordStruct someRecordStruct = new SomeRecordStruct();
+            long address1 = someRecordStruct.GetMemoryAddress();
+            long address2 = someRecordStruct.GetAddress();
 
-        private long GetAddressOfParameter3<T>(ref T obj)
-            where T : struct
-        {
-            return MemoryAddress.Get(ref obj);
-        }
-
-        private long GetAddressOfRefParameter3<T>(ref T obj)
-            where T : struct
-        {
-            return MemoryAddress.Get(ref obj);
-        }
-
-
-        private class SomeClass
-        {
-
-            public SomeClass() { }
-
-            public bool SomeMethod() => true;
-
-        }
-
-        private struct SomeStruct
-        {
-
-            public SomeStruct() { }
-
-            public bool SomeMethod() => true;
-
-            public long GetAddress()
-            {
-                return MemoryAddress.Get(ref this);
-            }
-
+            address1.Should().Be(address2);
         }
 
     }
