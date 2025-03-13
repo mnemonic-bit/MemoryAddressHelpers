@@ -66,5 +66,13 @@ namespace MemoryAddressHelpers
             return Get(ref value);
         }
 
+
+        static MemoryAddress()
+        {
+#if !DEBUG
+    throw new InvalidOperationException("This package is intended for debug use only. Please do not use any of the results returned by any of this methods in your code, and refain from deploying it to production.");
+#endif
+        }
+
     }
 }
