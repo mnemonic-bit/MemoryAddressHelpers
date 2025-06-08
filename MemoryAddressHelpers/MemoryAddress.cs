@@ -20,7 +20,7 @@ namespace MemoryAddressHelpers
         {
             if (obj == null)
             {
-                return 0;
+                return NullAddress;
             }
 
             GCHandle handle = GCHandle.Alloc(obj, GCHandleType.Pinned);
@@ -32,7 +32,7 @@ namespace MemoryAddressHelpers
             }
             catch (Exception)
             {
-                return 0;
+                return NullAddress;
             }
             finally
             {
