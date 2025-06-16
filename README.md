@@ -1,8 +1,11 @@
 # MemoryAddressHelpers
 
-This library provides two methods which revealsthe actual memory address of the instance
-of a class or value object. This package is for debugging purposes only, and should never
-be included in release code.
+This library provides two methods which reveal the actual memory address of an instance
+of a class or value object, i.e. the location of a reference type is where the reference
+points at, while the location of a value type is the address of the variable that holds
+that value.
+
+This package is for debugging purposes only, and should never be included in release code.
 
 
 ## Why Do I Need This Library?
@@ -21,6 +24,54 @@ want to activate in your own project. By placing this methods into a Nuget of
 their own, we can leave our own project untouched (except another package reference
 to this Nuget package). There is no need to use the tag AllowUnsafeBlocks in
 your own project.
+
+
+## How Do I Add This Library To My Project?
+
+Since its not exactly straight forward to add this Nuget, here are a few hints to
+make it as easy as possible for you to add the MemoryAddressHelpers Nuget to your
+project.
+
+You can use the Nuget Package Manager in Visual Studio, or use the command-line
+and type the following command
+
+```
+dotnet add package MemoryAddressHelpers
+```
+
+Either way, you will get a Nuget reference in you .csproj file, which will look
+like this one
+
+```
+  <ItemGroup>
+    <PackageReference Include="MemoryAddressHelpers" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+```
+
+The problem with this entry is, that the IncludeAssets value `compile` is missing,
+hence no symbol of the MemoryAddressHelpers pacakge will be available in your own
+project. To make this work, simply change or add to the value of IncludeAssets-tag
+to you liking, or at least to reflect this:
+
+```
+  <ItemGroup>
+    <PackageReference Include="MemoryAddressHelpers" Version="1.1.1">
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+```
+
+or simply skip all of this options and just include the package without any additional
+options set:
+
+```
+  <ItemGroup>
+    <PackageReference Include="MemoryAddressHelpers" Version="1.1.1"/>
+  </ItemGroup>
+```
 
 
 ## Examples Using Extension Methods
